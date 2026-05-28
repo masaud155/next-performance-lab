@@ -14,7 +14,7 @@ export default function QuizCard({ quiz, habitId, onComplete }) {
         <h4 className="font-semibold text-white">Mini quiz</h4>
       </div>
       <p className="text-sm leading-6 text-slate-300">{quiz.question}</p>
-      <div className="mt-4 grid gap-2 sm:grid-cols-3">
+      <div className="mt-4 grid gap-2">
         {quiz.options.map((option) => {
           const active = selected === option;
           return (
@@ -32,7 +32,7 @@ export default function QuizCard({ quiz, habitId, onComplete }) {
                   onComplete?.();
                 }
               }}
-              className={`focus-ring rounded-xl border px-3 py-3 text-left text-sm transition ${active ? "border-cyan-300 bg-cyan-300/12 text-cyan-100" : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06]"}`}
+              className={`focus-ring min-h-12 rounded-xl border px-4 py-3 text-left text-sm leading-6 transition ${active ? "border-cyan-300 bg-cyan-300/12 text-cyan-100" : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06]"}`}
             >
               {option}
             </button>

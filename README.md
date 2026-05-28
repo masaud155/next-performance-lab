@@ -2,6 +2,8 @@
 
 Next Performance Lab is a premium interactive Next.js learning app that teaches 7 real-world performance habits through good vs bad practice comparisons, animated metrics, code examples, quizzes, and production-focused explanations.
 
+Repository: [masaud155/next-performance-lab](https://github.com/masaud155/next-performance-lab)
+
 ## Features
 
 - Premium dark SaaS-style interface with glass panels, glowing dividers, and polished dashboard visuals

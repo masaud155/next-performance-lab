@@ -10,7 +10,7 @@ const links = [
   { href: "/", label: "Home", icon: Home },
   { href: "/#habits", label: "Habits", icon: Gauge },
   { href: "/guide", label: "Guide", icon: BookOpen },
-  { href: "https://github.com/", label: "GitHub", icon: Github, external: true }
+  { href: "https://github.com/masaud155/next-performance-lab", label: "GitHub", icon: Github, external: true }
 ];
 
 export default function Navbar() {

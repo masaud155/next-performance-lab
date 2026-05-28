@@ -17,7 +17,7 @@ export default function Footer() {
             <BookOpen className="h-4 w-4" />
             Guide
           </Link>
-          <a href="https://github.com/" className="focus-ring inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-slate-300 transition hover:bg-white/[0.06]">
+          <a href="https://github.com/masaud155/next-performance-lab" className="focus-ring inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-slate-300 transition hover:bg-white/[0.06]">
             <Github className="h-4 w-4" />
             GitHub
           </a>

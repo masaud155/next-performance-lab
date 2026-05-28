@@ -19,7 +19,7 @@ export default function CodeTabs({ badCode, goodCode, why, tip }) {
 
   return (
     <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4">
-      <div role="tablist" aria-label="Code comparison tabs" className="mb-4 grid gap-2 sm:grid-cols-4">
+      <div role="tablist" aria-label="Code comparison tabs" className="hide-scrollbar mb-4 flex gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/50 p-1">
         {tabLabels.map((tab) => (
           <button
             key={tab}
@@ -27,7 +27,7 @@ export default function CodeTabs({ badCode, goodCode, why, tip }) {
             role="tab"
             aria-selected={active === tab}
             onClick={() => setActive(tab)}
-            className={`focus-ring rounded-xl px-3 py-2 text-sm font-semibold transition ${active === tab ? "bg-cyan-300 text-slate-950" : "bg-white/[0.04] text-slate-300 hover:bg-white/[0.08]"}`}
+            className={`focus-ring shrink-0 rounded-xl px-3 py-2 text-sm font-semibold transition ${active === tab ? "bg-cyan-300 text-slate-950" : "text-slate-300 hover:bg-white/[0.08]"}`}
           >
             {tab}
           </button>

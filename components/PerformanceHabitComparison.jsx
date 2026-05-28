@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { BadgeCheck, Brain, CheckCircle2, Columns2, Eye, FlaskConical, Layers3, Sparkles } from "lucide-react";
+import { BadgeCheck, Brain, CheckCircle2, Columns2, Eye, FlaskConical, Layers3, Sparkles, Wand2 } from "lucide-react";
 import { useState } from "react";
 import CodeTabs from "./CodeTabs";
 import GoodBadPanel from "./GoodBadPanel";
@@ -77,7 +77,22 @@ export default function PerformanceHabitComparison({
         </div>
       </div>
 
-      <div className="glass-panel rounded-3xl p-4 sm:p-6">
+      <div className="glass-panel relative overflow-hidden rounded-3xl p-4 sm:p-6">
+        <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" />
+        <div className="mb-6 grid gap-4 rounded-2xl border border-white/10 bg-slate-950/45 p-4 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="flex items-start gap-3">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cyan-300/10 text-cyan-200">
+              <Wand2 className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="font-semibold text-white">Lab controls</p>
+              <p className="mt-1 text-sm leading-6 text-slate-400">Switch the explanation level, isolate one side of the comparison, or inspect exactly what changed.</p>
+            </div>
+          </div>
+          <div className="hidden rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-100 sm:block">
+            Interactive review mode
+          </div>
+        </div>
         <div className="mb-6 grid gap-4 xl:grid-cols-[1fr_auto] xl:items-center">
           <div className="inline-grid gap-2 rounded-2xl border border-white/10 bg-slate-950/60 p-1 sm:grid-cols-2">
             {["beginner", "senior"].map((item) => (

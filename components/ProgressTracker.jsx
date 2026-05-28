@@ -24,6 +24,27 @@ export default function ProgressTracker({ habits }) {
   const percent = Math.round((completed.length / habits.length) * 100);
 
   return (
+    <>
+      <div className="fixed inset-x-3 bottom-3 z-40 xl:hidden">
+        <div className="glass-panel rounded-2xl p-3 shadow-premium">
+          <div className="mb-2 flex items-center justify-between text-xs font-medium">
+            <span className="text-slate-300">Lab progress</span>
+            <span className="text-cyan-100">{completed.length}/{habits.length} · {percent}%</span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-slate-800">
+            <div className="h-full rounded-full bg-gradient-to-r from-cyan-300 to-emerald-300 transition-all duration-500" style={{ width: `${percent}%` }} />
+          </div>
+        </div>
+      </div>
+      <div className="hidden xl:block">
+        <DesktopTracker habits={habits} completed={completed} percent={percent} />
+      </div>
+    </>
+  );
+}
+
+function DesktopTracker({ habits, completed, percent }) {
+  return (
     <aside className="hidden xl:block">
       <div className="sticky top-24 space-y-4">
         <div className="glass-panel rounded-2xl p-5">

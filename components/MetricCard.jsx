@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 export default function MetricCard({ label, value, tone = "good", progress = 100 }) {
   const good = tone === "good";
+  const ring = good ? progress : 100 - progress;
   const numeric = Number(String(value).match(/\d+(\.\d+)?/)?.[0]);
   const animatedValue = Number.isFinite(numeric) && !Number.isNaN(numeric)
     ? good
@@ -13,11 +14,21 @@ export default function MetricCard({ label, value, tone = "good", progress = 100
   return (
     <motion.div
       whileHover={{ y: -3 }}
-      className={`rounded-2xl border p-4 ${good ? "border-emerald-300/20 bg-emerald-300/8" : "border-orange-300/20 bg-orange-400/8"}`}
+      className={`relative overflow-hidden rounded-2xl border p-4 ${good ? "border-emerald-300/20 bg-emerald-300/8" : "border-orange-300/20 bg-orange-400/8"}`}
     >
+      <div className={`absolute inset-x-4 top-0 h-px ${good ? "bg-emerald-300/50" : "bg-orange-300/50"}`} />
       <div className="flex items-center justify-between gap-3">
         <span className="text-xs uppercase tracking-[0.18em] text-slate-500">{label}</span>
-        {good ? <TrendingUp className="h-4 w-4 text-emerald-300" /> : <TrendingDown className="h-4 w-4 text-orange-300" />}
+        <span
+          className="grid h-9 w-9 place-items-center rounded-full"
+          style={{
+            background: `conic-gradient(${good ? "#34d399" : "#fb923c"} ${ring * 3.6}deg, rgba(148,163,184,.14) 0deg)`
+          }}
+        >
+          <span className="grid h-7 w-7 place-items-center rounded-full bg-slate-950">
+            {good ? <TrendingUp className="h-3.5 w-3.5 text-emerald-300" /> : <TrendingDown className="h-3.5 w-3.5 text-orange-300" />}
+          </span>
+        </span>
       </div>
       <p className={`mt-3 text-2xl font-semibold tracking-tight ${good ? "text-emerald-100" : "text-orange-100"}`}>
         {Number.isFinite(numeric) && !Number.isNaN(numeric) ? `${animatedValue}${String(value).replace(String(numeric), "")}` : value}

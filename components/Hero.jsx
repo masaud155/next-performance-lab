@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BookOpen, CheckCircle2, Github, Gauge, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, Github, Gauge, Server, Sparkles, Zap } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -22,7 +22,7 @@ export default function Hero() {
             <Sparkles className="h-4 w-4" />
             Portfolio-grade Next.js performance lab
           </div>
-          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-7xl">
+          <h1 className="text-gradient max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-7xl">
             Build faster Next.js instincts with visual good vs bad decisions.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
@@ -37,22 +37,23 @@ export default function Hero() {
               <BookOpen className="h-4 w-4" />
               Open Guide
             </Link>
-            <a href="https://github.com/" className="focus-ring inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/5 px-5 py-3 font-semibold text-white transition hover:bg-white/10">
+            <a href="https://github.com/masaud155/next-performance-lab" className="focus-ring inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/5 px-5 py-3 font-semibold text-white transition hover:bg-white/10">
               <Github className="h-4 w-4" />
               View GitHub
             </a>
           </div>
-          <div className="mt-10 grid gap-3 sm:grid-cols-4">
+          <div className="mt-10 grid gap-3 sm:grid-cols-2">
             {stats.map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <div key={stat.label} className="premium-card min-h-[104px] rounded-2xl p-5 transition hover:-translate-y-1 hover:border-cyan-300/30">
                 <p className="text-2xl font-semibold text-white">{stat.value}</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.16em] text-slate-500">{stat.label}</p>
+                <p className="mt-2 max-w-[12rem] text-[11px] font-medium uppercase leading-5 tracking-[0.12em] text-slate-500">{stat.label}</p>
               </div>
             ))}
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }} className="glass-panel rounded-3xl p-4">
+        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }} className="glass-panel relative overflow-hidden rounded-3xl p-4">
+          <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-cyan-300/10 blur-3xl" />
           <div className="mb-4 flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/65 px-4 py-3">
             <div className="flex items-center gap-2 text-sm font-semibold text-white">
               <Gauge className="h-4 w-4 text-cyan-300" />
@@ -63,6 +64,19 @@ export default function Hero() {
           <div className="grid gap-4 lg:grid-cols-2">
             <MockDashboard title="Bad Next.js App" tone="bad" values={["420 KB JS", "High hydration", "Sequential requests"]} />
             <MockDashboard title="Optimized Next.js App" tone="good" values={["120 KB JS", "Server first", "Parallel data"]} />
+          </div>
+          <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-slate-950/55 p-4 sm:grid-cols-3">
+            {["LCP 1.8s", "CLS 0.02", "INP 78ms"].map((metric, index) => (
+              <div key={metric} className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-3">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-emerald-300/12 text-emerald-200">
+                  <Server className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-white">{metric}</p>
+                  <p className="text-xs text-slate-500">Target {index + 1}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </motion.div>
       </div>
