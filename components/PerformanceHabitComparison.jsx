@@ -57,9 +57,8 @@ export default function PerformanceHabitComparison({
       viewport={{ once: true, margin: "-90px" }}
       transition={{ duration: 0.45 }}
     >
-      <div id={number === 1 ? "habits" : undefined} className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <div className="mb-3 flex flex-wrap items-center gap-2">
+      <div id={number === 1 ? "habits" : undefined} className="mx-auto mb-8 max-w-4xl text-center">
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
             <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">
               <FlaskConical className="h-4 w-4" />
               Habit {number}
@@ -72,9 +71,9 @@ export default function PerformanceHabitComparison({
                 Completed
               </span>
             )}
-          </div>
-          <h2 className="max-w-4xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">{title}</h2>
         </div>
+        <h2 className="text-gradient text-3xl font-semibold tracking-tight sm:text-5xl">{title}</h2>
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-300">{goodDescription}</p>
       </div>
 
       <div className="glass-panel relative overflow-hidden rounded-3xl p-4 sm:p-6">
@@ -147,6 +146,7 @@ export default function PerformanceHabitComparison({
                   tone="bad"
                   title={badTitle}
                   description={badDescription}
+                  code={badCode}
                   metrics={badMetrics}
                   visualDemo={visualDemo}
                   progress={impactValue}
@@ -157,6 +157,7 @@ export default function PerformanceHabitComparison({
                   tone="good"
                   title={goodTitle}
                   description={goodDescription}
+                  code={goodCode}
                   metrics={goodMetrics}
                   visualDemo={visualDemo}
                   progress={impactValue}

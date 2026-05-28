@@ -3,7 +3,7 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 
-export default function CodeBlock({ code, tone = "neutral" }) {
+export default function CodeBlock({ code, tone = "neutral", compact = false }) {
   const [copied, setCopied] = useState(false);
 
   async function copyCode() {
@@ -14,7 +14,7 @@ export default function CodeBlock({ code, tone = "neutral" }) {
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#050811]">
-      <div className="flex h-10 items-center gap-2 border-b border-white/10 px-4">
+      <div className={`${compact ? "h-8" : "h-10"} flex items-center gap-2 border-b border-white/10 px-4`}>
         <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
         <span className="h-2.5 w-2.5 rounded-full bg-yellow-300" />
         <span className="h-2.5 w-2.5 rounded-full bg-emerald-300" />
@@ -28,7 +28,7 @@ export default function CodeBlock({ code, tone = "neutral" }) {
       >
         {copied ? <Check className="h-4 w-4 text-emerald-300" /> : <Copy className="h-4 w-4" />}
       </button>
-      <pre className={`max-h-[380px] p-4 pr-14 text-sm leading-6 ${tone === "bad" ? "text-orange-100" : tone === "good" ? "text-cyan-100" : "text-slate-200"}`}>
+      <pre className={`${compact ? "max-h-[250px] text-xs leading-5" : "max-h-[380px] text-sm leading-6"} p-4 pr-14 ${tone === "bad" ? "text-orange-100" : tone === "good" ? "text-cyan-100" : "text-slate-200"}`}>
         <code>{code}</code>
       </pre>
     </div>

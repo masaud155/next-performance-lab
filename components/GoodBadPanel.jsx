@@ -2,10 +2,11 @@
 
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import CodeBlock from "./CodeBlock";
 import MetricCard from "./MetricCard";
 import TimelineDemo from "./TimelineDemo";
 
-export default function GoodBadPanel({ tone, title, description, metrics, visualDemo, applied, progress = 0 }) {
+export default function GoodBadPanel({ tone, title, description, code, metrics, visualDemo, applied, progress = 0 }) {
   const good = tone === "good" || applied;
   const Icon = good ? CheckCircle2 : AlertTriangle;
 
@@ -24,6 +25,16 @@ export default function GoodBadPanel({ tone, title, description, metrics, visual
           <h3 className="text-xl font-semibold text-white">{title}</h3>
           <p className="mt-1 text-sm leading-6 text-slate-300">{description}</p>
         </div>
+      </div>
+
+      <div className="mb-4 rounded-2xl border border-white/10 bg-slate-950/45 p-3">
+        <div className="mb-3 flex items-center justify-between px-1">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Architecture snapshot</p>
+          <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${good ? "bg-emerald-300/10 text-emerald-100" : "bg-orange-300/10 text-orange-100"}`}>
+            {good ? "Optimized" : "Problem"}
+          </span>
+        </div>
+        <CodeBlock code={code} tone={good ? "good" : "bad"} compact />
       </div>
 
       <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
