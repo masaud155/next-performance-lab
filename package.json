@@ -1,0 +1,28 @@
+{
+  "name": "next-performance-lab",
+  "version": "1.0.0",
+  "private": false,
+  "description": "An interactive Next.js app that teaches 7 real-world performance habits using good vs bad practice comparisons.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.15.0",
+    "lucide-react": "^0.511.0",
+    "next": "16.2.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwind-merge": "^3.3.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.27.0",
+    "eslint-config-next": "16.2.6",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^3.4.17"
+  }
+}
