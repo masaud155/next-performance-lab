@@ -1,41 +1,49 @@
-import { Activity, TrendingDown, TrendingUp } from "lucide-react";
+import { Gauge, TrendingDown, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function MetricCard({ label, value, tone = "good", progress = 100 }) {
   const good = tone === "good";
-  const ring = good ? progress : 100 - progress;
-  const numeric = Number(String(value).match(/\d+(\.\d+)?/)?.[0]);
-  const animatedValue = Number.isFinite(numeric) && !Number.isNaN(numeric)
-    ? good
-      ? Math.max(numeric, Math.round(numeric + (100 - progress) * 1.8))
-      : Math.max(1, Math.round(numeric - progress * 0.9))
-    : value;
+  const strength = good ? progress : 100 - progress;
+  const barWidth = Math.max(18, Math.min(100, strength));
 
   return (
     <motion.div
-      whileHover={{ y: -3 }}
-      className={`relative overflow-hidden rounded-2xl border p-4 ${good ? "border-emerald-300/20 bg-emerald-300/8" : "border-orange-300/20 bg-orange-400/8"}`}
+      whileHover={{ x: 4 }}
+      className={`relative overflow-hidden rounded-2xl border px-4 py-3 ${
+        good
+          ? "border-emerald-300/18 bg-emerald-300/[0.055]"
+          : "border-orange-300/18 bg-orange-300/[0.055]"
+      }`}
     >
-      <div className={`absolute inset-x-4 top-0 h-px ${good ? "bg-emerald-300/50" : "bg-orange-300/50"}`} />
-      <div className="flex items-center justify-between gap-3">
-        <span className="text-xs uppercase tracking-[0.18em] text-slate-500">{label}</span>
-        <span
-          className="grid h-9 w-9 place-items-center rounded-full"
-          style={{
-            background: `conic-gradient(${good ? "#34d399" : "#fb923c"} ${ring * 3.6}deg, rgba(148,163,184,.14) 0deg)`
-          }}
-        >
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-slate-950">
-            {good ? <TrendingUp className="h-3.5 w-3.5 text-emerald-300" /> : <TrendingDown className="h-3.5 w-3.5 text-orange-300" />}
-          </span>
+      <div className={`absolute inset-y-3 left-0 w-1 rounded-r-full ${good ? "bg-emerald-300" : "bg-orange-300"}`} />
+      <div className="flex items-center gap-4">
+        <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${
+          good
+            ? "border-emerald-300/20 bg-emerald-300/10 text-emerald-200"
+            : "border-orange-300/20 bg-orange-300/10 text-orange-200"
+        }`}>
+          {good ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
         </span>
-      </div>
-      <p className={`mt-3 text-2xl font-semibold tracking-tight ${good ? "text-emerald-100" : "text-orange-100"}`}>
-        {Number.isFinite(numeric) && !Number.isNaN(numeric) ? `${animatedValue}${String(value).replace(String(numeric), "")}` : value}
-      </p>
-      <div className="mt-4 flex items-center gap-2 text-xs text-slate-500">
-        <Activity className="h-3.5 w-3.5" />
-        Live estimate
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <p className="text-sm font-medium leading-5 text-slate-400">{label}</p>
+            <p className={`text-lg font-bold leading-6 ${good ? "text-emerald-50" : "text-orange-50"}`}>{value}</p>
+          </div>
+          <div className="mt-3 flex items-center gap-3">
+            <div className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-800/90">
+              <motion.div
+                className={`h-full rounded-full ${good ? "bg-gradient-to-r from-cyan-300 to-emerald-300" : "bg-gradient-to-r from-orange-300 to-red-400"}`}
+                animate={{ width: `${barWidth}%` }}
+                transition={{ duration: 0.35 }}
+              />
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-slate-500">
+              <Gauge className={`h-3.5 w-3.5 ${good ? "text-emerald-300/80" : "text-orange-300/80"}`} />
+              {good ? "Improved" : "Risk"}
+            </span>
+          </div>
+        </div>
       </div>
     </motion.div>
   );

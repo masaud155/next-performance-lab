@@ -16,7 +16,7 @@ export default function Hero() {
     <section id="top" className="relative overflow-hidden border-b border-white/10">
       <div className="absolute inset-0 bg-lab-grid lab-grid opacity-25" />
       <div className="absolute left-1/2 top-20 h-56 w-56 -translate-x-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
-      <div className="relative mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[0.88fr_1.12fr] lg:px-8">
+      <div className="relative mx-auto grid min-h-[calc(100vh-4rem)] max-w-[1500px] items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[0.86fr_1.14fr] lg:px-8 xl:px-10">
         <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-100">
             <Sparkles className="h-4 w-4" />

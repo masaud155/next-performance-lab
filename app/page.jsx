@@ -1,30 +1,24 @@
 import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
-import HabitNavigation from "@/components/HabitNavigation";
-import PerformanceHabitComparison from "@/components/PerformanceHabitComparison";
+import AppShell from "@/components/AppShell";
+import SectionContainer from "@/components/SectionContainer";
+import HabitSection from "@/components/HabitSection";
 import FinalSummary from "@/components/FinalSummary";
-import Footer from "@/components/Footer";
-import GuidePreview from "@/components/GuidePreview";
 import ProgressTracker from "@/components/ProgressTracker";
 import { habits } from "@/data/habits";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-ink text-slate-100">
-      <Navbar />
+    <AppShell>
       <Hero />
-      <GuidePreview />
-      <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[250px_1fr] xl:grid-cols-[230px_1fr_260px] lg:px-8">
-        <HabitNavigation habits={habits} />
-        <div className="space-y-16">
+      <SectionContainer className="grid gap-8 py-12 lg:py-16 xl:grid-cols-[minmax(0,1fr)_260px]">
+        <div className="space-y-12 lg:space-y-14">
           {habits.map((habit) => (
-            <PerformanceHabitComparison key={habit.id} {...habit} />
+            <HabitSection key={habit.id} {...habit} />
           ))}
           <FinalSummary habits={habits} />
         </div>
         <ProgressTracker habits={habits} />
-      </div>
-      <Footer />
-    </main>
+      </SectionContainer>
+    </AppShell>
   );
 }

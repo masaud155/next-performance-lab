@@ -6,7 +6,7 @@ import CodeBlock from "./CodeBlock";
 import MetricCard from "./MetricCard";
 import TimelineDemo from "./TimelineDemo";
 
-export default function GoodBadPanel({ tone, title, description, code, metrics, visualDemo, applied, progress = 0 }) {
+export default function GoodBadPanel({ tone, title, description, code, metrics, visualDemo, applied, progress = 0, detailed = false }) {
   const good = tone === "good" || applied;
   const Icon = good ? CheckCircle2 : AlertTriangle;
 
@@ -37,16 +37,20 @@ export default function GoodBadPanel({ tone, title, description, code, metrics, 
         <CodeBlock code={code} tone={good ? "good" : "bad"} compact />
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
-        <TimelineDemo type={visualDemo?.type} mode={good ? "good" : "bad"} progress={progress} />
-        <p className={`mt-4 text-sm ${good ? "text-emerald-100" : "text-orange-100"}`}>{good ? visualDemo?.goodLabel : visualDemo?.badLabel}</p>
-      </div>
+      {detailed && (
+        <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+          <TimelineDemo type={visualDemo?.type} mode={good ? "good" : "bad"} progress={progress} />
+          <p className={`mt-4 text-sm ${good ? "text-emerald-100" : "text-orange-100"}`}>{good ? visualDemo?.goodLabel : visualDemo?.badLabel}</p>
+        </div>
+      )}
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
-        {metrics.map((metric) => (
-          <MetricCard key={metric.label} {...metric} tone={good ? "good" : "bad"} progress={progress} />
-        ))}
-      </div>
+      {detailed && (
+        <div className="mt-4 grid gap-3">
+          {metrics.map((metric) => (
+            <MetricCard key={metric.label} {...metric} tone={good ? "good" : "bad"} progress={progress} />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }
