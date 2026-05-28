@@ -2,6 +2,8 @@ export const habits = [
   {
     id: "server-first",
     number: 1,
+    difficulty: "Beginner",
+    impact: "Production Critical",
     navTitle: "Server First, Client Only When Needed",
     title: "Server First, Client Only When Needed",
     badTitle: "Everything is a client component",
@@ -69,6 +71,7 @@ export default function ProductFilter() {
       changed: "The route moved data and markup back to the server while keeping the interactive filter as a small client island."
     },
     mistake: "Adding 'use client' to a page because one child needs a click handler.",
+    fix: "Move the client boundary down to the filter, button, dropdown, or widget that actually uses browser state.",
     productionTakeaway: "Default to server components. Push 'use client' down until it wraps only the smallest interactive surface.",
     quiz: {
       question: "Which file should usually receive 'use client' in this habit?",
@@ -86,6 +89,8 @@ export default function ProductFilter() {
   {
     id: "small-client-components",
     number: 2,
+    difficulty: "Beginner",
+    impact: "High Impact",
     navTitle: "Small Client Components",
     title: "Small Client Components",
     badTitle: "A dropdown turns the dashboard client-side",
@@ -144,6 +149,7 @@ export default async function Dashboard() {
       changed: "Only the dropdown owns browser state. The dashboard shell, table, and static dashboard content stay server-first."
     },
     mistake: "Lifting 'use client' to the parent layout because importing the client widget felt simpler.",
+    fix: "Keep the dashboard shell as a server component and import the client dropdown as a leaf island.",
     productionTakeaway: "Design dashboards as server layouts with interactive islands for filters, menus, editors, and buttons.",
     quiz: {
       question: "What is the best boundary for a small dropdown?",
@@ -161,6 +167,8 @@ export default async function Dashboard() {
   {
     id: "data-fetching",
     number: 3,
+    difficulty: "Intermediate",
+    impact: "Production Critical",
     navTitle: "Data Fetching Where It Belongs",
     title: "Data Fetching Where It Belongs",
     badTitle: "Important data waits for the browser",
@@ -213,6 +221,7 @@ export default function AccountPage() {
       changed: "Critical data moved from useEffect into the server route, while refresh behavior remained client-side."
     },
     mistake: "Using useEffect as the default data loading tool for every screen.",
+    fix: "Fetch critical first-render data in the server route and reserve client fetching for user-triggered updates.",
     productionTakeaway: "Classify data by when it is needed: first render, streaming chunk, or user-triggered update.",
     quiz: {
       question: "Where should critical first-render product data usually be fetched?",
@@ -230,6 +239,8 @@ export default function AccountPage() {
   {
     id: "request-waterfalls",
     number: 4,
+    difficulty: "Intermediate",
+    impact: "Production Critical",
     navTitle: "Avoid Request Waterfalls",
     title: "Avoid Request Waterfalls",
     badTitle: "Independent requests block each other",
@@ -278,6 +289,7 @@ export default function AccountPage() {
       changed: "Only the user request stays first because the other calls need the user id. The remaining requests run together."
     },
     mistake: "Writing awaits top to bottom without checking whether each one depends on the previous result.",
+    fix: "Identify true dependencies, then use Promise.all for independent work after the required parent data is available.",
     productionTakeaway: "Draw the data dependency graph before optimizing. Parallelize independent edges, not dependent ones.",
     quiz: {
       question: "When is Promise.all appropriate?",
@@ -295,6 +307,8 @@ export default function AccountPage() {
   {
     id: "images",
     number: 5,
+    difficulty: "Beginner",
+    impact: "High Impact",
     navTitle: "Optimize Images Properly",
     title: "Optimize Images Properly",
     badTitle: "Huge image with no sizing strategy",
@@ -347,6 +361,7 @@ export default function Hero() {
       changed: "The image now has intrinsic dimensions, responsive sizing, alt text, and deliberate priority."
     },
     mistake: "Dropping a high-resolution marketing image into a hero without width, height, or sizes.",
+    fix: "Use next/image with intrinsic dimensions, accurate sizes, priority only for the LCP image, and lazy loading elsewhere.",
     productionTakeaway: "Audit image bytes and layout shift together. Image optimization is both network and layout work.",
     quiz: {
       question: "Which prop helps the browser choose the right responsive image candidate?",
@@ -364,6 +379,8 @@ export default function Hero() {
   {
     id: "bundle-size",
     number: 6,
+    difficulty: "Advanced",
+    impact: "High Impact",
     navTitle: "Control Bundle Size",
     title: "Control Bundle Size",
     badTitle: "Heavy libraries load with the route",
@@ -420,6 +437,7 @@ export default function ReportsPage() {
       changed: "The chart moved behind a dynamic import with a loading state, reducing the first route payload."
     },
     mistake: "Importing a large visualization library on a route where the chart is secondary.",
+    fix: "Use bundle analysis to find heavy modules, then dynamically import large client-only widgets behind loading states.",
     productionTakeaway: "Use bundle analysis to find heavy modules, then split only the code that meaningfully affects initial load.",
     quiz: {
       question: "What is a strong candidate for dynamic import?",
@@ -437,6 +455,8 @@ export default function ReportsPage() {
   {
     id: "measure",
     number: 7,
+    difficulty: "Advanced",
+    impact: "Production Critical",
     navTitle: "Measure Before Optimizing",
     title: "Measure Before Optimizing",
     badTitle: "Random optimization guesses",
@@ -487,6 +507,7 @@ export default async function ProductPage() {
       changed: "The workflow starts with evidence, chooses a specific bottleneck, applies a targeted fix, and verifies the result."
     },
     mistake: "Adding React memoization everywhere before checking whether rendering is the slow part.",
+    fix: "Start with field data and lab traces, fix the measured bottleneck, then verify the change after deployment.",
     productionTakeaway: "Keep a repeatable performance loop: measure, identify, change, verify, and monitor after deploy.",
     quiz: {
       question: "What should happen before a major optimization rewrite?",

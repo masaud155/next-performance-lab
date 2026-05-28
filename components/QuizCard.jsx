@@ -3,7 +3,7 @@
 import { CheckCircle2, CircleHelp } from "lucide-react";
 import { useState } from "react";
 
-export default function QuizCard({ quiz }) {
+export default function QuizCard({ quiz, habitId, onComplete }) {
   const [selected, setSelected] = useState(null);
   const correct = selected === quiz.answer;
 
@@ -21,8 +21,18 @@ export default function QuizCard({ quiz }) {
             <button
               key={option}
               type="button"
-              onClick={() => setSelected(option)}
-              className={`rounded-lg border px-3 py-3 text-left text-sm transition ${active ? "border-cyan-300 bg-cyan-300/12 text-cyan-100" : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06]"}`}
+              onClick={() => {
+                setSelected(option);
+                if (option === quiz.answer && habitId) {
+                  const stored = window.localStorage.getItem("next-performance-lab-progress");
+                  const current = stored ? JSON.parse(stored) : [];
+                  const next = current.includes(habitId) ? current : [...current, habitId];
+                  window.localStorage.setItem("next-performance-lab-progress", JSON.stringify(next));
+                  window.dispatchEvent(new Event("performance-lab-progress"));
+                  onComplete?.();
+                }
+              }}
+              className={`focus-ring rounded-xl border px-3 py-3 text-left text-sm transition ${active ? "border-cyan-300 bg-cyan-300/12 text-cyan-100" : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06]"}`}
             >
               {option}
             </button>

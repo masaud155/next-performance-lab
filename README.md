@@ -1,16 +1,21 @@
-﻿# Next Performance Lab
+# Next Performance Lab
 
-An interactive Next.js app that teaches 7 real-world performance habits using good vs bad practice comparisons.
+Next Performance Lab is a premium interactive Next.js learning app that teaches 7 real-world performance habits through good vs bad practice comparisons, animated metrics, code examples, quizzes, and production-focused explanations.
 
 ## Features
 
-- Premium dark UI for learning practical Next.js performance patterns
-- Side-by-side bad practice vs good practice sections
-- Interactive performance sliders, animated timelines, metric cards, and quizzes
-- Copyable code snippets for every habit
-- Beginner and senior engineer explanation modes
-- Data-driven habit content in `data/habits.js`
-- Fully responsive layout for desktop, tablet, and mobile
+- Premium dark SaaS-style interface with glass panels, glowing dividers, and polished dashboard visuals
+- Side-by-side, bad-only, good-only, and difference comparison modes
+- Interactive performance impact slider for every habit
+- Animated metric cards for bundle size, hydration, loading, image weight, and confidence indicators
+- Code tabs for Bad Code, Good Code, Why It Matters, and Real Project Tip
+- Copy-to-clipboard code snippets
+- Animated request and loading timelines
+- Mini quizzes with instant feedback and local progress tracking
+- Real-world mistake and practical fix cards
+- Difficulty and production-impact labels
+- Dedicated `/guide` page with roadmap, usage guide, common mistakes, and final checklist
+- Fully responsive App Router project using JSX only
 
 ## Screenshots
 
@@ -38,22 +43,33 @@ Open `http://localhost:3000`.
 
 ```text
 app/
+  guide/
+    page.jsx
   layout.jsx
   page.jsx
   globals.css
 components/
-  Hero.jsx
-  Navbar.jsx
-  HabitNavigation.jsx
-  PerformanceHabitComparison.jsx
   CodeBlock.jsx
-  MetricCard.jsx
-  PerformanceTimeline.jsx
-  GoodBadPanel.jsx
-  QuizCard.jsx
+  CodeTabs.jsx
+  FinalChecklist.jsx
   FinalSummary.jsx
   Footer.jsx
+  GoodBadPanel.jsx
+  GuidePreview.jsx
+  GuideSection.jsx
+  HabitNavigation.jsx
+  HabitRoadmap.jsx
+  Hero.jsx
+  MetricCard.jsx
+  Navbar.jsx
+  PerformanceHabitComparison.jsx
+  PerformanceSlider.jsx
+  ProgressTracker.jsx
+  QuizCard.jsx
+  RealWorldTip.jsx
+  TimelineDemo.jsx
 data/
+  guide.js
   habits.js
 lib/
   utils.js
@@ -63,7 +79,7 @@ public/
 
 ## Learning Goals
 
-This project helps developers learn how real Next.js performance improves when teams reduce unnecessary client JavaScript, fetch data in the right place, avoid request waterfalls, optimize images, control bundle size, and measure before changing architecture.
+This project helps developers learn how real Next.js performance improves when teams keep static UI on the server, isolate client components, fetch data in the right place, avoid request waterfalls, optimize images, control bundle size, and measure before optimizing.
 
 ## The 7 Habits
 
@@ -75,14 +91,18 @@ This project helps developers learn how real Next.js performance improves when t
 6. Control Bundle Size
 7. Measure Before Optimizing
 
+## Guide Page
+
+The `/guide` page explains how to use the lab effectively. It includes who the project is for, how to study each comparison, a step-by-step learning path, common performance mistakes, real project application notes, and a final pre-ship checklist.
+
 ## How to Contribute
 
-Contributions are welcome. Useful improvements include new visual demos, clearer examples, accessibility refinements, test coverage, and real screenshots for the README.
+Contributions are welcome. Useful improvements include new visual demos, clearer examples, accessibility refinements, screenshots, tests, and additional real-world performance scenarios.
 
 1. Fork the repository.
 2. Create a feature branch.
 3. Make a focused change.
-4. Run the app locally and verify the interaction.
+4. Run lint and build.
 5. Open a pull request with a clear description.
 
 ## License

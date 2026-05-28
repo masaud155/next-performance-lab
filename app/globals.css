@@ -15,8 +15,9 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(34, 211, 238, 0.12), transparent 34rem),
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 28rem),
+    radial-gradient(circle at 8% 0%, rgba(34, 211, 238, 0.16), transparent 28rem),
+    radial-gradient(circle at 78% 10%, rgba(59, 130, 246, 0.12), transparent 32rem),
+    radial-gradient(circle at 50% 72%, rgba(16, 185, 129, 0.08), transparent 34rem),
     #05070c;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -31,4 +32,19 @@ pre {
 
 .lab-grid {
   background-size: 32px 32px;
+}
+
+.glass-panel {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.86), rgba(2, 6, 23, 0.72));
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+}
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35);
 }

@@ -1,18 +1,27 @@
 "use client";
 
-import { ArrowRight, BadgeCheck, Brain, FlaskConical, RotateCcw, Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { BadgeCheck, Brain, CheckCircle2, Columns2, Eye, FlaskConical, Layers3, Sparkles } from "lucide-react";
+import { useState } from "react";
+import CodeTabs from "./CodeTabs";
 import GoodBadPanel from "./GoodBadPanel";
-import CodeBlock from "./CodeBlock";
+import PerformanceSlider from "./PerformanceSlider";
 import QuizCard from "./QuizCard";
+import RealWorldTip from "./RealWorldTip";
 
-const tabs = ["Bad Code", "Good Code", "Explanation"];
+const comparisonModes = [
+  { id: "split", label: "Side by side", icon: Columns2 },
+  { id: "bad", label: "Bad only", icon: Eye },
+  { id: "good", label: "Good only", icon: CheckCircle2 },
+  { id: "diff", label: "Difference", icon: Layers3 }
+];
 
 export default function PerformanceHabitComparison({
   id,
   number,
   title,
+  difficulty,
+  impact,
   badTitle,
   goodTitle,
   badDescription,
@@ -26,169 +35,172 @@ export default function PerformanceHabitComparison({
   beginnerExplanation,
   seniorExplanation,
   mistake,
+  fix,
   productionTakeaway,
   quiz
 }) {
   const [level, setLevel] = useState("beginner");
-  const [activeTab, setActiveTab] = useState("Bad Code");
-  const [improvement, setImprovement] = useState(0);
-  const [applied, setApplied] = useState(false);
+  const [mode, setMode] = useState("split");
+  const [impactValue, setImpactValue] = useState(0);
+  const [completed, setCompleted] = useState(false);
 
   const explanation = level === "beginner" ? beginnerExplanation : seniorExplanation;
-  const currentCode = useMemo(() => {
-    if (activeTab === "Bad Code") return badCode;
-    if (activeTab === "Good Code") return goodCode;
-    return explanation;
-  }, [activeTab, badCode, goodCode, explanation]);
-
-  function applyOptimization() {
-    setApplied(true);
-    setImprovement(100);
-  }
-
-  function resetOptimization() {
-    setApplied(false);
-    setImprovement(0);
-  }
+  const showBad = mode === "split" || mode === "bad";
+  const showGood = mode === "split" || mode === "good";
 
   return (
-    <section id={id} className="scroll-mt-24">
-      <div id={number === 1 ? "habits" : undefined} className="mb-6">
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">
-          <FlaskConical className="h-4 w-4" />
-          Habit {number}
+    <motion.section
+      id={id}
+      className="scroll-mt-24"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-90px" }}
+      transition={{ duration: 0.45 }}
+    >
+      <div id={number === 1 ? "habits" : undefined} className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">
+              <FlaskConical className="h-4 w-4" />
+              Habit {number}
+            </span>
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm text-slate-300">{difficulty}</span>
+            <span className="rounded-full border border-yellow-300/20 bg-yellow-300/10 px-3 py-1 text-sm text-yellow-100">{impact}</span>
+            {completed && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1 text-sm text-emerald-100">
+                <CheckCircle2 className="h-4 w-4" />
+                Completed
+              </span>
+            )}
+          </div>
+          <h2 className="max-w-4xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">{title}</h2>
         </div>
-        <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">{title}</h2>
       </div>
 
-      <div className="rounded-2xl border border-line bg-panel/76 p-4 shadow-glow sm:p-6">
-        <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="inline-flex rounded-lg border border-white/10 bg-slate-950/60 p-1">
+      <div className="glass-panel rounded-3xl p-4 sm:p-6">
+        <div className="mb-6 grid gap-4 xl:grid-cols-[1fr_auto] xl:items-center">
+          <div className="inline-grid gap-2 rounded-2xl border border-white/10 bg-slate-950/60 p-1 sm:grid-cols-2">
             {["beginner", "senior"].map((item) => (
               <button
                 key={item}
                 type="button"
                 onClick={() => setLevel(item)}
-                className={`rounded-md px-3 py-2 text-sm font-medium capitalize transition ${level === item ? "bg-cyan-300 text-slate-950" : "text-slate-300 hover:bg-white/5"}`}
+                className={`focus-ring rounded-xl px-3 py-2 text-sm font-semibold transition ${level === item ? "bg-cyan-300 text-slate-950" : "text-slate-300 hover:bg-white/5"}`}
               >
                 {item === "beginner" ? "Beginner Explanation" : "Senior Engineer Explanation"}
               </button>
             ))}
           </div>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={applyOptimization}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
-            >
-              <Sparkles className="h-4 w-4" />
-              Apply Optimization
-            </button>
-            <button
-              type="button"
-              onClick={resetOptimization}
-              className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10"
-              aria-label="Reset optimization"
-            >
-              <RotateCcw className="h-4 w-4" />
-            </button>
+          <div className="grid gap-2 rounded-2xl border border-white/10 bg-slate-950/60 p-1 sm:grid-cols-4">
+            {comparisonModes.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setMode(item.id)}
+                className={`focus-ring inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition ${mode === item.id ? "bg-white text-slate-950" : "text-slate-300 hover:bg-white/5"}`}
+              >
+                <item.icon className="h-4 w-4" />
+                {item.label}
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-2">
-          <GoodBadPanel
-            tone="bad"
-            title={applied ? goodTitle : badTitle}
-            description={applied ? goodDescription : badDescription}
-            metrics={applied ? goodMetrics : badMetrics}
-            visualDemo={visualDemo}
-            applied={applied}
-          />
-          <GoodBadPanel
-            tone="good"
-            title={goodTitle}
-            description={goodDescription}
-            metrics={goodMetrics}
-            visualDemo={visualDemo}
-          />
-        </div>
-
-        <div className="mt-6 rounded-xl border border-white/10 bg-slate-950/55 p-5">
-          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold text-white">Performance slider</p>
-              <p className="text-sm text-slate-400">Drag from the slow implementation toward the optimized version.</p>
-            </div>
-            <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-100">{improvement}% improved</span>
-          </div>
-          <input
-            aria-label="Performance improvement"
-            type="range"
-            min="0"
-            max="100"
-            value={improvement}
-            onChange={(event) => setImprovement(Number(event.target.value))}
-            className="w-full accent-cyan-300"
-          />
-          <div className="mt-3 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-slate-500">
-            <span>Slow app</span>
-            <ArrowRight className="h-4 w-4 text-cyan-300" />
-            <span>Optimized app</span>
-          </div>
-          <motion.div className="mt-4 h-2 rounded-full bg-slate-800">
+        <AnimatePresence mode="wait">
+          {mode === "diff" ? (
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-orange-300 via-yellow-300 to-emerald-300"
-              animate={{ width: `${improvement}%` }}
-            />
-          </motion.div>
+              key="diff"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="grid gap-4 lg:grid-cols-3"
+            >
+              <DifferenceCard title="Bad practice" body={badDescription} tone="bad" />
+              <DifferenceCard title="What changed" body={takeaways.changed} tone="neutral" />
+              <DifferenceCard title="Good practice" body={goodDescription} tone="good" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={mode}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className={`grid gap-5 ${mode === "split" ? "xl:grid-cols-2" : "grid-cols-1"}`}
+            >
+              {showBad && (
+                <GoodBadPanel
+                  tone="bad"
+                  title={badTitle}
+                  description={badDescription}
+                  metrics={badMetrics}
+                  visualDemo={visualDemo}
+                  progress={impactValue}
+                />
+              )}
+              {showGood && (
+                <GoodBadPanel
+                  tone="good"
+                  title={goodTitle}
+                  description={goodDescription}
+                  metrics={goodMetrics}
+                  visualDemo={visualDemo}
+                  progress={impactValue}
+                />
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="mt-6">
+          <PerformanceSlider value={impactValue} onChange={setImpactValue} />
         </div>
 
-        <div className="mt-6 grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
-          <div className="rounded-xl border border-white/10 bg-slate-950/55 p-4">
-            <div className="mb-4 flex flex-wrap gap-2">
-              {tabs.map((tab) => (
-                <button
-                  key={tab}
-                  type="button"
-                  onClick={() => setActiveTab(tab)}
-                  className={`rounded-lg px-3 py-2 text-sm font-medium transition ${activeTab === tab ? "bg-cyan-300 text-slate-950" : "bg-white/5 text-slate-300 hover:bg-white/10"}`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            <CodeBlock code={currentCode} tone={activeTab === "Bad Code" ? "bad" : activeTab === "Good Code" ? "good" : "neutral"} />
-          </div>
-
+        <div className="mt-6 grid gap-5 xl:grid-cols-[1.25fr_0.75fr]">
+          <CodeTabs badCode={badCode} goodCode={goodCode} why={explanation} tip={productionTakeaway} />
           <div className="space-y-4">
             <Callout icon={Brain} title="What changed?" tone="cyan">
               {takeaways.changed}
             </Callout>
-            <Callout icon={BadgeCheck} title="Real-world mistake" tone="orange">
-              {mistake}
-            </Callout>
+            <RealWorldTip mistake={mistake} fix={fix} />
             <Callout icon={Sparkles} title="Production takeaway" tone="green">
               {productionTakeaway}
             </Callout>
-            <QuizCard quiz={quiz} />
+            <QuizCard quiz={quiz} habitId={id} onComplete={() => setCompleted(true)} />
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
+  );
+}
+
+function DifferenceCard({ title, body, tone }) {
+  const toneClass = {
+    bad: "border-orange-300/20 bg-orange-300/8",
+    good: "border-emerald-300/20 bg-emerald-300/8",
+    neutral: "border-cyan-300/20 bg-cyan-300/8"
+  }[tone];
+
+  return (
+    <div className={`rounded-2xl border p-5 ${toneClass}`}>
+      <h3 className="mb-3 flex items-center gap-2 font-semibold text-white">
+        <BadgeCheck className="h-4 w-4 text-cyan-200" />
+        {title}
+      </h3>
+      <p className="text-sm leading-7 text-slate-300">{body}</p>
+    </div>
   );
 }
 
 function Callout({ icon: Icon, title, children, tone }) {
   const toneClass = {
-    cyan: "border-cyan-300/20 bg-cyan-300/8 text-cyan-100",
-    orange: "border-orange-300/20 bg-orange-300/8 text-orange-100",
-    green: "border-emerald-300/20 bg-emerald-300/8 text-emerald-100"
+    cyan: "border-cyan-300/20 bg-cyan-300/8",
+    green: "border-emerald-300/20 bg-emerald-300/8"
   }[tone];
 
   return (
-    <div className={`rounded-xl border p-4 ${toneClass}`}>
+    <div className={`rounded-2xl border p-5 ${toneClass}`}>
       <div className="mb-2 flex items-center gap-2 font-semibold text-white">
-        <Icon className="h-4 w-4" />
+        <Icon className="h-4 w-4 text-cyan-200" />
         {title}
       </div>
       <p className="text-sm leading-6 text-slate-200">{children}</p>

@@ -3,19 +3,21 @@
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import MetricCard from "./MetricCard";
-import PerformanceTimeline from "./PerformanceTimeline";
+import TimelineDemo from "./TimelineDemo";
 
-export default function GoodBadPanel({ tone, title, description, metrics, visualDemo, applied }) {
+export default function GoodBadPanel({ tone, title, description, metrics, visualDemo, applied, progress = 0 }) {
   const good = tone === "good" || applied;
   const Icon = good ? CheckCircle2 : AlertTriangle;
 
   return (
     <motion.div
       layout
-      className={`rounded-xl border p-4 sm:p-5 ${good ? "border-emerald-300/24 bg-emerald-300/8" : "border-orange-300/24 bg-orange-400/8"}`}
+      whileHover={{ y: -4 }}
+      className={`relative overflow-hidden rounded-2xl border p-4 sm:p-5 ${good ? "border-emerald-300/24 bg-emerald-300/8" : "border-orange-300/24 bg-orange-400/8"}`}
     >
+      <div className={`absolute inset-x-0 top-0 h-px ${good ? "bg-gradient-to-r from-transparent via-emerald-300/70 to-transparent" : "bg-gradient-to-r from-transparent via-orange-300/70 to-transparent"}`} />
       <div className="mb-5 flex items-start gap-3">
-        <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-lg ${good ? "bg-emerald-300/14 text-emerald-200" : "bg-orange-300/14 text-orange-200"}`}>
+        <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl ${good ? "bg-emerald-300/14 text-emerald-200" : "bg-orange-300/14 text-orange-200"}`}>
           <Icon className="h-5 w-5" />
         </span>
         <div>
@@ -24,14 +26,14 @@ export default function GoodBadPanel({ tone, title, description, metrics, visual
         </div>
       </div>
 
-      <div className="rounded-lg border border-white/10 bg-slate-950/70 p-4">
-        <PerformanceTimeline type={visualDemo?.type} optimized={good} applied={applied} />
+      <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+        <TimelineDemo type={visualDemo?.type} mode={good ? "good" : "bad"} progress={progress} />
         <p className={`mt-4 text-sm ${good ? "text-emerald-100" : "text-orange-100"}`}>{good ? visualDemo?.goodLabel : visualDemo?.badLabel}</p>
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
         {metrics.map((metric) => (
-          <MetricCard key={metric.label} {...metric} tone={good ? "good" : "bad"} />
+          <MetricCard key={metric.label} {...metric} tone={good ? "good" : "bad"} progress={progress} />
         ))}
       </div>
     </motion.div>
